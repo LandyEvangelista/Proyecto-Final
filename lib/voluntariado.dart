@@ -20,7 +20,7 @@ class _VoluntariadoPageState extends State<VoluntariadoPage> {
       _cargando = true;
     });
 
-    final url = Uri.parse("https://adamix.net/defensa_civil/voluntarios.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/registro.php");
     final response = await http.post(url, body: {
       'nombre': nombreController.text,
       'telefono': telefonoController.text,

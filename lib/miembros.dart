@@ -18,7 +18,7 @@ class _MiembrosPageState extends State<MiembrosPage> {
   }
 
   Future<void> obtenerMiembros() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/miembros.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/miembros.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {

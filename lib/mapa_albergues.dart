@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:latlong2/latlong.dart';
 
 class MapaAlberguesPage extends StatefulWidget {
   @override
@@ -10,7 +10,6 @@ class MapaAlberguesPage extends StatefulWidget {
 }
 
 class _MapaAlberguesPageState extends State<MapaAlberguesPage> {
-  List albergues = [];
   List<Marker> marcadores = [];
   bool cargando = true;
 
@@ -21,7 +20,7 @@ class _MapaAlberguesPageState extends State<MapaAlberguesPage> {
   }
 
   Future<void> obtenerAlbergues() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/albergues.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/albergues.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {
@@ -29,41 +28,22 @@ class _MapaAlberguesPageState extends State<MapaAlberguesPage> {
       List<Marker> temp = [];
 
       for (var a in datos['datos']) {
-        double lat = double.tryParse(a['latitud']) ?? 0.0;
-        double lng = double.tryParse(a['longitud']) ?? 0.0;
+        double? lat = double.tryParse(a['latitud'] ?? '');
+        double? lng = double.tryParse(a['longitud'] ?? '');
 
-        if (lat != 0.0 && lng != 0.0) {
+        if (lat != null && lng != null && lat != 0.0 && lng != 0.0) {
           temp.add(
             Marker(
+              width: 40,
+              height: 40,
               point: LatLng(lat, lng),
-              width: 35,
-              height: 35,
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text(a['colegio']),
-                      content: Text(
-                          'Provincia: ${a['provincia']}\nMunicipio: ${a['municipio']}\nSector: ${a['sector']}\nCapacidad: ${a['capacidad']} personas'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text('Cerrar'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                child: Icon(Icons.location_pin, color: Colors.orange, size: 35),
-              ),
+              child: Icon(Icons.location_pin, color: Colors.red, size: 40),
             ),
           );
         }
       }
 
       setState(() {
-        albergues = datos['datos'];
         marcadores = temp;
         cargando = false;
       });
@@ -82,13 +62,13 @@ class _MapaAlberguesPageState extends State<MapaAlberguesPage> {
           ? Center(child: CircularProgressIndicator())
           : FlutterMap(
               options: MapOptions(
-                initialCenter: LatLng(18.7357, -70.1627),
+                initialCenter: LatLng(18.7357, -70.1627), // Centro RD
                 initialZoom: 7.5,
               ),
               children: [
                 TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'com.example.app',
+                  urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  userAgentPackageName: "com.example.app",
                 ),
                 MarkerLayer(markers: marcadores),
               ],

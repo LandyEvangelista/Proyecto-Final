@@ -9,6 +9,7 @@ import 'mapa_albergues.dart';
 import 'medidas_preventivas.dart';
 import 'miembros.dart';
 import 'voluntariado.dart';
+import 'login.dart';
 
 void main() {
   runApp(MiAppDefensaCivil());
@@ -20,7 +21,7 @@ class MiAppDefensaCivil extends StatelessWidget {
     return MaterialApp(
       title: 'Defensa Civil',
       theme: ThemeData(primarySwatch: Colors.orange),
-      home: MenuPrincipal(),
+      home: LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -20,7 +20,7 @@ class _AlberguesPageState extends State<AlberguesPage> {
   }
 
   Future<void> obtenerAlbergues() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/albergues.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/albergues.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {
@@ -78,19 +78,18 @@ class _AlberguesPageState extends State<AlberguesPage> {
                       return Card(
                         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: ListTile(
-                          title: Text(item['colegio']),
-                          subtitle: Text('Municipio: ${item['municipio']}\nSector: ${item['sector']}'),
+                          title: Text(item['colegio'] ?? 'Sin nombre'),
+                          subtitle: Text('Municipio: ${item['municipio'] ?? 'N/D'}\nSector: ${item['sector'] ?? 'N/D'}'),
                           isThreeLine: true,
                           leading: Icon(Icons.home),
                           onTap: () {
-                            // Se puede usar para mostrar más detalles
                             showDialog(
                               context: context,
                               builder: (_) => AlertDialog(
-                                title: Text(item['colegio']),
-                                content: Text(
-                                    'Provincia: ${item['provincia']}\nMunicipio: ${item['municipio']}\nSector: ${item['sector']}\nCapacidad: ${item['capacidad']} personas'),
-                                actions: [
+                                title: Text(item['colegio'] ?? 'Sin nombre'),
+                                  content: Text(
+                                  'Provincia: ${item['provincia'] ?? 'N/D'}\nMunicipio: ${item['municipio'] ?? 'N/D'}\nSector: ${item['sector'] ?? 'N/D'}\nCapacidad: ${item['capacidad'] ?? 'N/D'} personas'),
+                                  actions: [
                                   TextButton(
                                     onPressed: () => Navigator.pop(context),
                                     child: Text('Cerrar'),

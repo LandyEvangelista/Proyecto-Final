@@ -18,7 +18,7 @@ class _ServiciosPageState extends State<ServiciosPage> {
   }
 
   Future<void> obtenerServicios() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/servicios.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/servicios.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {
@@ -46,8 +46,8 @@ class _ServiciosPageState extends State<ServiciosPage> {
               itemBuilder: (context, index) {
                 final servicio = servicios[index];
                 return ListTile(
-                  title: Text(servicio['titulo']),
-                  subtitle: Text(servicio['descripcion']),
+                  title: Text(servicio['titulo'] ?? 'Sin título'),
+                  subtitle: Text(servicio['descripcion'] ?? 'Sin descripción'),
                   leading: Icon(Icons.miscellaneous_services),
                 );
               },

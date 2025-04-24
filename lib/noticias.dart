@@ -18,7 +18,7 @@ class _NoticiasPageState extends State<NoticiasPage> {
   }
 
   Future<void> obtenerNoticias() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/noticias.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/noticias.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {
@@ -49,8 +49,8 @@ class _NoticiasPageState extends State<NoticiasPage> {
                   margin: EdgeInsets.all(8.0),
                   elevation: 4,
                   child: ListTile(
-                    title: Text(noticia['titulo']),
-                    subtitle: Text(noticia['descripcion']),
+                    title: Text(noticia['titulo'] ?? 'Sin título'),
+                    subtitle: Text(noticia['descripcion'] ?? 'Sin descripción'),
                     leading: Icon(Icons.article_outlined),
                   ),
                 );

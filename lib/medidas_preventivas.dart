@@ -18,7 +18,7 @@ class _MedidasPreventivasPageState extends State<MedidasPreventivasPage> {
   }
 
   Future<void> obtenerMedidas() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/medidas.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/medidas_preventivas.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {

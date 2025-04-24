@@ -19,7 +19,7 @@ class _VideosPageState extends State<VideosPage> {
   }
 
   Future<void> obtenerVideos() async {
-    final url = Uri.parse("https://adamix.net/defensa_civil/videos.php");
+    final url = Uri.parse("https://adamix.net/defensa_civil/def/videos.php");
     final respuesta = await http.get(url);
 
     if (respuesta.statusCode == 200) {
